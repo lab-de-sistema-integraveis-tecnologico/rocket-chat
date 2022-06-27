@@ -30,7 +30,7 @@ export type ServerContextValue = {
 		| {
 				promise: Promise<UploadResult>;
 		  };
-	getStream: (streamName: string, options?: {}) => <T>(eventName: string, callback: (data: T) => void) => () => void;
+	getStream: (streamName: string, options?: Record<string, unknown>) => <T>(eventName: string, callback: (data: T) => void) => () => void;
 };
 
 export const ServerContext = createContext<ServerContextValue>({
