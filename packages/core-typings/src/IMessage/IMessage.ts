@@ -192,6 +192,7 @@ export const isEditedMessage = (message: IMessage): message is IEditedMessage =>
 
 export interface ITranslatedMessage extends IMessage {
 	translations: { [key: string]: string } & { original?: string };
+	translationProvider: string;
 	autoTranslateShowInverse?: boolean;
 	autoTranslateFetching?: boolean;
 }
