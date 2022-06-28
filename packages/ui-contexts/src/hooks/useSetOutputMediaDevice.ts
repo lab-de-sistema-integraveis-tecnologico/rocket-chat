@@ -12,6 +12,4 @@ type setOutputMediaDevice = ({
 	HTMLAudioElement: IExperimentalHTMLAudioElement;
 }) => void;
 
-export const useSetOutputMediaDevice = (): setOutputMediaDevice => {
-	return useContext(DeviceContext).setAudioOutputDevice;
-};
+export const useSetOutputMediaDevice = (): setOutputMediaDevice => useContext(DeviceContext).setAudioOutputDevice;
