@@ -94,7 +94,7 @@ export class SAMLServiceProvider {
 				target += querystring.stringify(samlResponse);
 
 				return callback(null, target);
-			} catch (error) {
+			} catch (error: any) {
 				return callback(error);
 			}
 		});
@@ -153,7 +153,7 @@ export class SAMLServiceProvider {
 					return callback(null, target);
 				}
 				callback(null, target);
-			} catch (error) {
+			} catch (error: any) {
 				callback(error);
 			}
 		});

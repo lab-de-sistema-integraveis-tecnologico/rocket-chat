@@ -26,7 +26,7 @@ const AppsWhatIsIt: FC = () => {
 				await Apps.load(true);
 			}
 			appsRouter.push();
-		} catch (error) {
+		} catch (error: any) {
 			setError(error);
 		}
 	};

@@ -111,7 +111,11 @@ export type MethodFor<TPath extends Path> = TPath extends any ? Extract<Operatio
 
 export type PathFor<TMethod extends Method> = TMethod extends any ? Extract<Operations, { method: TMethod }>['path'] : never;
 
-export type MatchPathPattern<TPath extends Path> = TPath extends any ? Extract<Operations, { path: TPath }>['pathPattern'] : never;
+type PathToPathPatternMap = {
+	[TPathPattern in keyof Endpoints as ReplacePlaceholders<TPathPattern>]: TPathPattern;
+};
+
+export type MatchPathPattern<TPath extends Path> = TPath extends keyof Endpoints ? TPath : PathToPathPatternMap[TPath];
 
 export type JoinPathPattern<TBasePath extends string, TSubPathPattern extends string> = Extract<
 	PathPattern,

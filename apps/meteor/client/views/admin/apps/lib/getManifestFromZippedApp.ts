@@ -23,7 +23,7 @@ function getAppManifest(unzippedAppBuffer: Uint8ArrayObject): AppManifestSchema 
 
 	try {
 		return JSON.parse(strFromU8(unzippedAppBuffer['app.json']));
-	} catch (e) {
+	} catch (e: any) {
 		throw new Error(`Failed to parse app.json: ${e.message}`);
 	}
 }

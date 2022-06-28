@@ -61,7 +61,7 @@ export class ResponseParser {
 			assertion = assertionData.assertion;
 
 			this.verifySignatures(response, assertionData, xml);
-		} catch (e) {
+		} catch (e: any) {
 			return callback(e, null, false);
 		}
 
@@ -73,7 +73,7 @@ export class ResponseParser {
 
 		try {
 			issuer = this.getIssuer(assertion);
-		} catch (e) {
+		} catch (e: any) {
 			return callback(e, null, false);
 		}
 
@@ -94,14 +94,14 @@ export class ResponseParser {
 
 			try {
 				this.validateSubjectConditions(subject);
-			} catch (e) {
+			} catch (e: any) {
 				return callback(e, null, false);
 			}
 		}
 
 		try {
 			this.validateAssertionConditions(assertion);
-		} catch (e) {
+		} catch (e: any) {
 			return callback(e, null, false);
 		}
 

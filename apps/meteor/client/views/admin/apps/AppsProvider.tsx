@@ -163,7 +163,7 @@ const AppsProvider: FC = ({ children }) => {
 
 		try {
 			marketplaceApps = (await Apps.getAppsFromMarketplace()) as unknown as App[];
-		} catch (e) {
+		} catch (e: any) {
 			dispatchMarketplaceApps({
 				type: 'failure',
 				error: e,
@@ -180,7 +180,7 @@ const AppsProvider: FC = ({ children }) => {
 					marketplace: false,
 				})),
 			);
-		} catch (e) {
+		} catch (e: any) {
 			dispatchInstalledApps({
 				type: 'failure',
 				error: e,
@@ -252,14 +252,14 @@ const AppsProvider: FC = ({ children }) => {
 
 			try {
 				installedApp = await Apps.getApp(appId);
-			} catch (error) {
+			} catch (error: any) {
 				handleAPIError(error);
 				throw error;
 			}
 
 			try {
 				marketplaceApp = await Apps.getAppFromMarketplace(appId, installedApp.version);
-			} catch (error) {
+			} catch (error: any) {
 				handleAPIError(error);
 			}
 

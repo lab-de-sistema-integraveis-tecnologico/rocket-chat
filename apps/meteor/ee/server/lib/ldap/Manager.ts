@@ -171,7 +171,7 @@ export class LDAPEEManager extends LDAPManager {
 	private static parseJson(json: string): Record<string, any> | undefined {
 		try {
 			return JSON.parse(json);
-		} catch (err) {
+		} catch (err: any) {
 			logger.error(`Unexpected error : ${err.message}`);
 		}
 	}

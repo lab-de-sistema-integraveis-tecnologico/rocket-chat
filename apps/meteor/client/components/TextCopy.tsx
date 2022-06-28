@@ -21,7 +21,7 @@ const TextCopy = ({ text, wrapper = defaultWrapperRenderer, ...props }: TextCopy
 		try {
 			navigator.clipboard.writeText(text);
 			dispatchToastMessage({ type: 'success', message: t('Copied') });
-		} catch (e) {
+		} catch (e: any) {
 			dispatchToastMessage({ type: 'error', message: e });
 		}
 	}, [dispatchToastMessage, t, text]);

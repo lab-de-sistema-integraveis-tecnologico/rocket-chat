@@ -31,7 +31,7 @@ export const APIClient = new RestApiClient({
 APIClient.use(async function (request, next) {
 	try {
 		return await next(...request);
-	} catch (error) {
+	} catch (error: any) {
 		if (!(error instanceof Response) || error.status !== 400) {
 			throw error;
 		}

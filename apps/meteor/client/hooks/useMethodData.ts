@@ -7,7 +7,7 @@ export const useMethodData = <TName extends keyof ServerMethods, Result = Server
 	methodName: TName,
 	args: ServerMethodParameters<TName>,
 	initialValue?: Result | (() => Result),
-): AsyncState<Result> & { reload: () => void } => {
+): AsyncState<Result> & { reload: () => Promise<void> } => {
 	const { resolve, reject, reset, ...state } = useAsyncState<Result>(initialValue);
 	const dispatchToastMessage = useToastMessageDispatch();
 	const getData = useMethod(methodName);
@@ -17,7 +17,7 @@ export const useMethodData = <TName extends keyof ServerMethods, Result = Server
 			reset();
 			const data = await getData(...args);
 			resolve(data);
-		} catch (error) {
+		} catch (error: any) {
 			dispatchToastMessage({
 				type: 'error',
 				message: error,

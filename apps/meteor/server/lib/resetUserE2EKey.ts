@@ -42,7 +42,7 @@ const sendResetNotitification = function (uid: string): void {
 					text,
 					html,
 				} as any);
-			} catch (error) {
+			} catch (error: any) {
 				throw new Meteor.Error('error-email-send-failed', `Error trying to send email: ${error.message}`, {
 					function: 'resetUserE2EEncriptionKey',
 					message: error.message,

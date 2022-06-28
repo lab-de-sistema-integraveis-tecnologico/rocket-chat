@@ -65,7 +65,7 @@ export const useUpdateAvatar = (avatarObj: AvatarObject, userId: IUser['_id']): 
 			try {
 				await setAvatarFromService(blob, contentType, service);
 				dispatchToastMessage({ type: 'success', message: successText });
-			} catch (error) {
+			} catch (error: any) {
 				dispatchToastMessage({ type: 'error', message: error });
 			}
 			return;

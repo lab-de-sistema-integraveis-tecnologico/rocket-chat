@@ -84,7 +84,7 @@ const ThreadComponent: FC<{
 				}
 
 				await unfollowMessage({ mid });
-			} catch (error) {
+			} catch (error: any) {
 				dispatchToastMessage({
 					type: 'error',
 					message: error,

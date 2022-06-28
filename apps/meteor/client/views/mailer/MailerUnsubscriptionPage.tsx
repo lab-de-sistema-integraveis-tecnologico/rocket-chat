@@ -17,7 +17,7 @@ const useMailerUnsubscriptionState = (): AsyncState<boolean> => {
 			try {
 				await unsubscribe(_id, createdAt);
 				resolve(true);
-			} catch (error) {
+			} catch (error: any) {
 				dispatchToastMessage({ type: 'error', message: error });
 				reject(error);
 			}

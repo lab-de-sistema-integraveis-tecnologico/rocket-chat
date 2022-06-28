@@ -134,7 +134,7 @@ const CallJitsiWithData = ({ rid }: { rid: IRoom['_id'] }): ReactElement => {
 
 			try {
 				return updateTimeout(rid, false);
-			} catch (error) {
+			} catch (error: any) {
 				dispatchToastMessage({ type: 'error', message: t(error.reason) });
 				clear(() => undefined);
 				handleClose();
@@ -149,7 +149,7 @@ const CallJitsiWithData = ({ rid }: { rid: IRoom['_id'] }): ReactElement => {
 		if (new Date().valueOf() - new Date(room.jitsiTimeout ?? '').valueOf() + TIMEOUT > DEBOUNCE) {
 			try {
 				return updateTimeout(rid, false);
-			} catch (error) {
+			} catch (error: any) {
 				dispatchToastMessage({ type: 'error', message: t(error.reason) });
 				clear(() => undefined);
 				handleClose();
@@ -175,7 +175,7 @@ const CallJitsiWithData = ({ rid }: { rid: IRoom['_id'] }): ReactElement => {
 			} else {
 				updateTimeout(rid, false);
 			}
-		} catch (error) {
+		} catch (error: any) {
 			dispatchToastMessage({ type: 'error', message: t(error.reason) });
 			clear();
 			handleClose();

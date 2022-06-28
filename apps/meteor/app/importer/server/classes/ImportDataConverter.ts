@@ -365,7 +365,7 @@ export class ImportDataConverter {
 				if (afterImportFn) {
 					afterImportFn(data, 'user', isNewUser);
 				}
-			} catch (e) {
+			} catch (e: any) {
 				this._logger.error(e);
 				this.saveError(_id, e);
 			}
@@ -621,7 +621,7 @@ export class ImportDataConverter {
 				if (afterImportFn) {
 					afterImportFn(data, 'message', true);
 				}
-			} catch (e) {
+			} catch (e: any) {
 				this.saveError(_id, e);
 			}
 		});
@@ -931,7 +931,7 @@ export class ImportDataConverter {
 				if (afterImportFn) {
 					afterImportFn(data, 'channel', !existingRoom);
 				}
-			} catch (e) {
+			} catch (e: any) {
 				this.saveError(_id, e);
 			}
 		});

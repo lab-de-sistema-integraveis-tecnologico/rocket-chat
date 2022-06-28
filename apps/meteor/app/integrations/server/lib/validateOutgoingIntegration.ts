@@ -180,7 +180,7 @@ export const validateOutgoingIntegration = function (
 
 			integrationData.scriptCompiled = Babel.compile(integration.script, babelOptions).code;
 			integrationData.scriptError = undefined;
-		} catch (e) {
+		} catch (e: any) {
 			integrationData.scriptCompiled = undefined;
 			integrationData.scriptError = _.pick(e, 'name', 'message', 'stack');
 		}

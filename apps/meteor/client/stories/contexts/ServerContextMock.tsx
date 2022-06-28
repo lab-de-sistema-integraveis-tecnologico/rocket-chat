@@ -89,7 +89,7 @@ const ServerContextMock = ({
 
 				return {
 					match: (method: string, path: string): boolean => _method === method && pathRegexp.test(path[0] === '/' ? path : `/v1/${path}`),
-					handler,
+					handler: handler as any,
 				};
 			},
 		);

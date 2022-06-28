@@ -1,18 +1,18 @@
 import { api } from '../api';
 
-type FunctionPropertyNames<T> = {
-	[K in keyof T]: T[K] extends Function ? K : never;
-}[keyof T];
-
 type Prom<T> = {
-	[K in FunctionPropertyNames<T>]: T[K] extends (...params: any) => any
-		? (...params: Parameters<T[K]>) => Promise<Awaited<ReturnType<T[K]>>>
+	[K in keyof T as T[K] extends Function ? K : never]: T[K] extends (...params: any) => Promise<any>
+		? T[K]
+		: T[K] extends (...params: infer P) => infer R
+		? (...params: P) => Promise<R>
 		: never;
 };
 
 type PromOrError<T> = {
-	[K in FunctionPropertyNames<T>]: T[K] extends (...params: any) => any
-		? (...params: Parameters<T[K]>) => Promise<Awaited<ReturnType<T[K]>> | Error>
+	[K in keyof T as T[K] extends Function ? K : never]: T[K] extends (...params: any) => Promise<any>
+		? T[K]
+		: T[K] extends (...params: infer P) => infer R
+		? (...params: P) => Promise<R | Error>
 		: never;
 };
 
@@ -31,5 +31,5 @@ export function proxifyWithWait<T>(namespace: string): Prom<T> {
 }
 
 export function proxify<T>(namespace: string): PromOrError<T> {
-	return new Proxy({}, handler(namespace, false)) as unknown as Prom<T>;
+	return new Proxy({}, handler(namespace, false)) as unknown as PromOrError<T>;
 }

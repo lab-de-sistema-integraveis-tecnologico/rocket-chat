@@ -78,19 +78,19 @@ export class RestClient implements RestClientInterface {
 		this.credentials = credentials;
 	};
 
-	get<TPath extends PathFor<'GET'>>(
+	get<TPath extends PathFor<'GET'>, TPathPattern extends MatchPathPattern<TPath>>(
 		endpoint: TPath,
 		params: void extends OperationParams<'GET', MatchPathPattern<TPath>> ? never : OperationParams<'GET', MatchPathPattern<TPath>>,
 		options?: Omit<RequestInit, 'method'>,
 	): Promise<Serialized<OperationResult<'GET', MatchPathPattern<TPath>>>>;
 
-	get<TPath extends PathFor<'GET'>>(
+	get<TPath extends PathFor<'GET'>, TPathPattern extends MatchPathPattern<TPath>>(
 		endpoint: TPath,
 		params?: void extends OperationParams<'GET', MatchPathPattern<TPath>> ? undefined : never,
 		options?: Omit<RequestInit, 'method'>,
 	): Promise<Serialized<OperationResult<'GET', MatchPathPattern<TPath>>>>;
 
-	get<TPath extends PathFor<'GET'>>(
+	get<TPath extends PathFor<'GET'>, TPathPattern extends MatchPathPattern<TPath>>(
 		endpoint: TPath,
 		params?: OperationParams<'GET', MatchPathPattern<TPath>>,
 		options?: Omit<RequestInit, 'method'>,
@@ -105,7 +105,11 @@ export class RestClient implements RestClientInterface {
 		});
 	}
 
-	post: RestClientInterface['post'] = (endpoint, params, { headers, ...options } = {}) => {
+	post<TPath extends PathFor<'POST'>>(
+		endpoint: TPath,
+		params: void extends OperationParams<'POST', MatchPathPattern<TPath>> ? never : OperationParams<'POST', MatchPathPattern<TPath>>,
+		{ headers, ...options }: Omit<RequestInit, 'method'> = {},
+	): Promise<Serialized<OperationResult<'POST', MatchPathPattern<TPath>>>> {
 		const isFormData = checkIfIsFormData(params);
 
 		return this.send(endpoint, 'POST', {
@@ -121,7 +125,7 @@ export class RestClient implements RestClientInterface {
 		}).then(function (response) {
 			return response.json();
 		});
-	};
+	}
 
 	put: RestClientInterface['put'] = (endpoint, params, { headers, ...options } = {}) => {
 		const isFormData = checkIfIsFormData(params);

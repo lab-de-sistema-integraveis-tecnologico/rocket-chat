@@ -44,7 +44,7 @@ const AddUsersWithData = ({ rid, onClickBack, reload }: AddUsersWithDataProps): 
 			dispatchToastMessage({ type: 'success', message: t('Users_added') });
 			onClickBack();
 			reload();
-		} catch (error) {
+		} catch (error: any) {
 			dispatchToastMessage({ type: 'error', message: error });
 		}
 	});

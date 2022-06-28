@@ -25,6 +25,12 @@ export type AppsEndpoints = {
 		GET: () => IUIActionButton[];
 	};
 
+	'/apps/languages': {
+		GET: () => {
+			apps: App[];
+		};
+	};
+
 	'/apps/public/:appId/get-sidebar-icon': {
 		GET: (params: { icon: string }) => unknown;
 	};
@@ -39,6 +45,14 @@ export type AppsEndpoints = {
 	'/apps/:id/screenshots': {
 		GET: () => {
 			screenshots: AppScreenshot[];
+		};
+	};
+
+	'/apps/:id/languages': {
+		GET: () => {
+			languages: {
+				[key: string]: object;
+			}[];
 		};
 	};
 
