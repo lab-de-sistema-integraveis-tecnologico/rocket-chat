@@ -14,8 +14,5 @@ export const useEndpoint = <TMethod extends Method, TPath extends PathFor<TMetho
 ): EndpointFunction<TMethod, MatchPathPattern<TPath>> => {
 	const { callEndpoint } = useContext(ServerContext);
 
-	return useCallback(
-		(params: Serialized<OperationParams<TMethod, MatchPathPattern<TPath>>>) => callEndpoint(method, path, params),
-		[callEndpoint, path, method],
-	);
+	return useCallback((params: any) => callEndpoint(method, path, params), [callEndpoint, path, method]);
 };

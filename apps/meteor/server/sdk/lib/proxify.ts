@@ -5,15 +5,15 @@ type FunctionPropertyNames<T> = {
 }[keyof T];
 
 type Prom<T> = {
-	[K in FunctionPropertyNames<T>]: ReturnType<T[K]> extends Promise<any>
-		? T[K]
-		: (...params: Parameters<T[K]>) => Promise<ReturnType<T[K]>>;
+	[K in FunctionPropertyNames<T>]: T[K] extends (...params: any) => any
+		? (...params: Parameters<T[K]>) => Promise<Awaited<ReturnType<T[K]>>>
+		: never;
 };
 
 type PromOrError<T> = {
-	[K in FunctionPropertyNames<T>]: ReturnType<T[K]> extends Promise<any>
-		? (...params: Parameters<T[K]>) => ReturnType<T[K]> | Promise<Error>
-		: (...params: Parameters<T[K]>) => Promise<ReturnType<T[K]> | Error>;
+	[K in FunctionPropertyNames<T>]: T[K] extends (...params: any) => any
+		? (...params: Parameters<T[K]>) => Promise<Awaited<ReturnType<T[K]>> | Error>
+		: never;
 };
 
 function handler<T extends object>(namespace: string, waitService: boolean): ProxyHandler<T> {

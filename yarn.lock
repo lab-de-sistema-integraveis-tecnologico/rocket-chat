@@ -3271,7 +3271,7 @@ __metadata:
     split-on-first: ^3.0.0
     strict-uri-encode: ^2.0.0
     ts-jest: ^27.1.4
-    typescript: ~4.3.5
+    typescript: ~4.5.4
   languageName: unknown
   linkType: soft
 
@@ -3315,7 +3315,7 @@ __metadata:
     "@types/mongodb": ^3.6.10
     eslint: ^8.14.0
     prettier: ^2.6.2
-    typescript: ~4.3.4
+    typescript: ~4.5.4
   languageName: unknown
   linkType: soft
 
@@ -3416,7 +3416,7 @@ __metadata:
     pino: ^7.9.2
     pino-pretty: ^7.6.0
     sharp: ^0.30.6
-    typescript: ~4.3.5
+    typescript: ~4.5.4
     uuid: ^7.0.3
     ws: ^8.5.0
   languageName: unknown
@@ -3464,7 +3464,7 @@ __metadata:
   resolution: "@rocket.chat/favicon@workspace:packages/favicon"
   dependencies:
     eslint: ^8.12.0
-    typescript: ~4.3.4
+    typescript: ~4.5.4
   languageName: unknown
   linkType: soft
 
@@ -3754,7 +3754,7 @@ __metadata:
     stylelint-order: ^4.1.0
     svg-loader: ^0.0.2
     ts-loader: ^8.3.0
-    typescript: ^4.6.3
+    typescript: ~4.5.4
     url-loader: ^4.1.0
     webpack: ^4.44.1
     webpack-cli: ^3.3.12
@@ -4103,7 +4103,7 @@ __metadata:
     turndown: ^7.1.1
     twilio: ^3.76.1
     twit: ^2.2.11
-    typescript: ~4.3.4
+    typescript: ~4.5.4
     ua-parser-js: ^1.0.2
     underscore: ^1.13.3
     underscore.string: ^3.3.6
@@ -4133,7 +4133,7 @@ __metadata:
     eslint: ^8.12.0
     jest: ^27.5.1
     ts-jest: ^27.1.4
-    typescript: ~4.3.4
+    typescript: ~4.5.4
   languageName: unknown
   linkType: soft
 
@@ -4146,7 +4146,7 @@ __metadata:
     eslint: ^8.12.0
     jest: ^27.5.1
     ts-jest: ^27.1.4
-    typescript: ~4.3.4
+    typescript: ~4.5.4
   languageName: unknown
   linkType: soft
 
@@ -4188,7 +4188,7 @@ __metadata:
     eslint: ^8.12.0
     jest: ^27.5.1
     ts-jest: ^27.1.4
-    typescript: ~4.3.4
+    typescript: ~4.5.4
   languageName: unknown
   linkType: soft
 
@@ -4207,7 +4207,7 @@ __metadata:
     eslint: ^8.14.0
     jest: ^27.5.1
     ts-jest: ^27.1.4
-    typescript: ~4.3.4
+    typescript: ~4.5.4
   languageName: unknown
   linkType: soft
 
@@ -4319,7 +4319,7 @@ __metadata:
     prettier: ^2.7.1
     react: ~17.0.2
     ts-jest: ^27.1.4
-    typescript: ~4.3.5
+    typescript: ~4.5.4
     use-sync-external-store: ^1.2.0
   peerDependencies:
     "@rocket.chat/core-typings": "workspace:^"
@@ -27450,7 +27450,7 @@ __metadata:
     sodium-native: ^3.3.0
     sodium-plus: ^0.9.0
     ts-node: ^10.7.0
-    typescript: ~4.3.4
+    typescript: ~4.5.4
     underscore.string: ^3.3.6
     uuid: ^8.3.2
     ws: ^8.5.0
@@ -30774,43 +30774,23 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@npm:^4.6.3":
-  version: 4.6.3
-  resolution: "typescript@npm:4.6.3"
+"typescript@npm:~4.5.4":
+  version: 4.5.5
+  resolution: "typescript@npm:4.5.5"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
-  checksum: 255bb26c8cb846ca689dd1c3a56587af4f69055907aa2c154796ea28ee0dea871535b1c78f85a6212c77f2657843a269c3a742d09d81495b97b914bf7920415b
+  checksum: 506f4c919dc8aeaafa92068c997f1d213b9df4d9756d0fae1a1e7ab66b585ab3498050e236113a1c9e57ee08c21ec6814ca7a7f61378c058d79af50a4b1f5a5e
   languageName: node
   linkType: hard
 
-"typescript@npm:~4.3.4, typescript@npm:~4.3.5":
-  version: 4.3.5
-  resolution: "typescript@npm:4.3.5"
+"typescript@patch:typescript@~4.5.4#~builtin<compat/typescript>":
+  version: 4.5.5
+  resolution: "typescript@patch:typescript@npm%3A4.5.5#~builtin<compat/typescript>::version=4.5.5&hash=bda367"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
-  checksum: bab033b5e2b0790dd35b77fd005df976ef80b8d84fd2c6e63cc31808151875beae9216e5a315fe7068e8499905c3c354248fe83272cdfc13b7705635f0c66c97
-  languageName: node
-  linkType: hard
-
-"typescript@patch:typescript@^4.6.3#~builtin<compat/typescript>":
-  version: 4.6.3
-  resolution: "typescript@patch:typescript@npm%3A4.6.3#~builtin<compat/typescript>::version=4.6.3&hash=bda367"
-  bin:
-    tsc: bin/tsc
-    tsserver: bin/tsserver
-  checksum: 6bf45caf847062420592e711bc9c28bf5f9a9a7fa8245343b81493e4ededae33f1774009d1234d911422d1646a2c839f44e1a23ecb111b40a60ac2ea4c1482a8
-  languageName: node
-  linkType: hard
-
-"typescript@patch:typescript@~4.3.4#~builtin<compat/typescript>, typescript@patch:typescript@~4.3.5#~builtin<compat/typescript>":
-  version: 4.3.5
-  resolution: "typescript@patch:typescript@npm%3A4.3.5#~builtin<compat/typescript>::version=4.3.5&hash=bda367"
-  bin:
-    tsc: bin/tsc
-    tsserver: bin/tsserver
-  checksum: 365df18cf979c971ef9543b2acaa8694377a803f98e1804c41d0ede0b09d7046cb0cd98f2eaf3884b0fe923c01a60af1f653841bd8805c9715d5479c09a4ebe4
+  checksum: 858c61fa63f7274ca4aaaffeced854d550bf416cff6e558c4884041b3311fb662f476f167cf5c9f8680c607239797e26a2ee0bcc6467fbc05bfcb218e1c6c671
   languageName: node
   linkType: hard
 
