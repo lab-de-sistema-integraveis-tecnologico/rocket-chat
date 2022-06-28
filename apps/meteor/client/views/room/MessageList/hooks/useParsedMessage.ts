@@ -1,17 +1,16 @@
-import { IMessage, isTranslatedMessage } from '@rocket.chat/core-typings';
+import { IMessage, isTranslatedMessage, ITranslatedMessage } from '@rocket.chat/core-typings';
 import { MarkdownAST, parser } from '@rocket.chat/message-parser';
 import { useMemo } from 'react';
 
 import { useShowTranslated } from '../contexts/MessageListContext';
 import { useAutotranslateLanguage } from './useAutotranslateLanguage';
 
-export function useParsedMessage(message: Pick<IMessage, 'md' | 'msg' | 'rid' | 'ts' | 'u' | '_id' | '_updatedAt'>): MarkdownAST {
+export function useParsedMessage(message: IMessage & Partial<ITranslatedMessage>): MarkdownAST {
 	const autoTranslateLanguage = useAutotranslateLanguage(message.rid);
 	const translated = useShowTranslated({ message });
-	const shouldTranslate = autoTranslateLanguage && translated && isTranslatedMessage(message);
 
 	return useMemo(() => {
-		if (shouldTranslate) {
+		if (translated && autoTranslateLanguage && isTranslatedMessage(message)) {
 			return parser(message.translations[autoTranslateLanguage]);
 		}
 		if (message.md) {
@@ -21,5 +20,5 @@ export function useParsedMessage(message: Pick<IMessage, 'md' | 'msg' | 'rid' | 
 			return [];
 		}
 		return parser(message.msg);
-	}, [message, autoTranslateLanguage, shouldTranslate]);
+	}, [message, autoTranslateLanguage, translated]);
 }
