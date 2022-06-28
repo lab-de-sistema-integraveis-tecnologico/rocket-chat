@@ -73,6 +73,12 @@ export { useUserSubscription } from './hooks/useUserSubscription';
 export { useUserSubscriptionByName } from './hooks/useUserSubscriptionByName';
 export { useUserSubscriptions } from './hooks/useUserSubscriptions';
 
-export { ServerMethods, ServerMethodName, ServerMethodParameters, ServerMethodReturn, ServerMethodFunction } from './ServerContext/methods';
+export {
+	Methods as ServerMethods,
+	MethodName as ServerMethodName,
+	MethodParameters as ServerMethodParameters,
+	MethodResult as ServerMethodReturn,
+	MethodFunction as ServerMethodFunction,
+} from './ServerContext/methods';
 export { UploadResult } from './ServerContext';
 export { TranslationKey, TranslationLanguage } from './TranslationContext';

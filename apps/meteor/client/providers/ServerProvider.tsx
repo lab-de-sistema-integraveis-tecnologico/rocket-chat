@@ -8,12 +8,12 @@ import { Info as info, APIClient } from '../../app/utils/client';
 
 const absoluteUrl = (path: string): string => Meteor.absoluteUrl(path);
 
-const callMethod = <MethodName extends ServerMethodName>(
-	methodName: MethodName,
-	...args: ServerMethodParameters<MethodName>
-): Promise<ServerMethodReturn<MethodName>> =>
+const callMethod = <TName extends ServerMethodName>(
+	methodName: TName,
+	...args: ServerMethodParameters<TName>
+): Promise<ServerMethodReturn<TName>> =>
 	new Promise((resolve, reject) => {
-		Meteor.call(methodName, ...args, (error: Error, result: ServerMethodReturn<MethodName>) => {
+		Meteor.call(methodName, ...args, (error: Error, result: ServerMethodReturn<TName>) => {
 			if (error) {
 				reject(error);
 				return;

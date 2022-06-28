@@ -74,9 +74,7 @@ const ServerContextMock = ({
 	const parent = useContext(ServerContext);
 
 	const value = useMemo((): ContextType<typeof ServerContext> => {
-		type ServerContextValue = ContextType<typeof ServerContext>;
-
-		const absoluteURL: ServerContextValue['absoluteUrl'] = (path): string => {
+		const absoluteURL = (path: string): string => {
 			logAction('absoluteUrl', path);
 			return new URL(path, baseURL).toString();
 		};
@@ -96,7 +94,7 @@ const ServerContextMock = ({
 			},
 		);
 
-		const _callEndpoint: ServerContextValue['callEndpoint'] = async <TMethod extends Method, TPath extends PathFor<TMethod>>(
+		const _callEndpoint = async <TMethod extends Method, TPath extends PathFor<TMethod>>(
 			method: TMethod,
 			path: TPath,
 			params: Serialized<OperationParams<TMethod, MatchPathPattern<TPath>>>,
@@ -123,10 +121,10 @@ const ServerContextMock = ({
 			return handler(params) as Promise<Serialized<OperationResult<TMethod, MatchPathPattern<TPath>>>>;
 		};
 
-		const _callMethod: ServerContextValue['callMethod'] = async <MethodName extends ServerMethodName>(
-			methodName: MethodName,
-			...args: ServerMethodParameters<MethodName>
-		): Promise<ServerMethodReturn<MethodName>> => {
+		const _callMethod = async <TName extends ServerMethodName>(
+			methodName: TName,
+			...args: ServerMethodParameters<TName>
+		): Promise<ServerMethodReturn<TName>> => {
 			const handler = callMethod[methodName];
 			if (!handler) {
 				logAction('callMethod (undefined)', methodName, ...args);

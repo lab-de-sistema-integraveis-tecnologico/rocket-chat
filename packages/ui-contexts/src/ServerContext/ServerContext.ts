@@ -2,7 +2,7 @@ import type { IServerInfo, Serialized } from '@rocket.chat/core-typings';
 import type { Method, OperationParams, MatchPathPattern, OperationResult, PathFor } from '@rocket.chat/rest-typings';
 import { createContext } from 'react';
 
-import type { ServerMethodName, ServerMethodParameters, ServerMethodReturn } from './methods';
+import type { MethodName, MethodParametersMap, MethodResultPromiseMap } from './methods';
 
 export type UploadResult = {
 	success: boolean;
@@ -13,10 +13,7 @@ export type UploadResult = {
 export type ServerContextValue = {
 	info?: IServerInfo;
 	absoluteUrl: (path: string) => string;
-	callMethod?: <MethodName extends ServerMethodName>(
-		methodName: MethodName,
-		...args: ServerMethodParameters<MethodName>
-	) => Promise<ServerMethodReturn<MethodName>>;
+	callMethod?: <TName extends MethodName>(methodName: TName, ...args: MethodParametersMap[TName]) => MethodResultPromiseMap[TName];
 	callEndpoint: <TMethod extends Method, TPath extends PathFor<TMethod>>(
 		method: TMethod,
 		path: TPath,

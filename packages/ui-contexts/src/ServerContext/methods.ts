@@ -14,7 +14,7 @@ import type { UnfollowMessageMethod } from './methods/unfollowMessage';
 
 // TODO: frontend chapter day - define methods
 
-export interface ServerMethods {
+export interface Methods {
 	'2fa:checkCodesRemaining': (...args: any[]) => any;
 	'2fa:disable': (...args: any[]) => any;
 	'2fa:enable': (...args: any[]) => any;
@@ -148,12 +148,22 @@ export interface ServerMethods {
 	};
 }
 
-export type ServerMethodName = keyof ServerMethods;
+export type MethodParametersMap = {
+	[TName in keyof Methods]: Parameters<Methods[TName]>;
+};
 
-export type ServerMethodParameters<MethodName extends ServerMethodName> = Parameters<ServerMethods[MethodName]>;
+export type MethodResultMap = {
+	[TName in keyof Methods]: ReturnType<Methods[TName]>;
+};
 
-export type ServerMethodReturn<MethodName extends ServerMethodName> = ReturnType<ServerMethods[MethodName]>;
+export type MethodResultPromiseMap = {
+	[TName in keyof Methods]: Promise<ReturnType<Methods[TName]>>;
+};
 
-export type ServerMethodFunction<MethodName extends ServerMethodName> = (
-	...args: ServerMethodParameters<MethodName>
-) => Promise<ServerMethodReturn<MethodName>>;
+export type MethodName = keyof Methods;
+
+export type MethodParameters<TName extends MethodName> = MethodParametersMap[TName];
+
+export type MethodResult<TName extends MethodName> = MethodResultMap[TName];
+
+export type MethodFunction<TName extends MethodName> = (...args: MethodParametersMap[TName]) => MethodResultPromiseMap[TName];
