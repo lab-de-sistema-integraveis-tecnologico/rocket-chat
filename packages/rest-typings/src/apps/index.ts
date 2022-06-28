@@ -52,7 +52,7 @@ export type AppsEndpoints = {
 		GET: () => {
 			languages: {
 				[key: string]: object;
-			}[];
+			};
 		};
 	};
 

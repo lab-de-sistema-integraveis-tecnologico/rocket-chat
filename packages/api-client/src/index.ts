@@ -78,19 +78,19 @@ export class RestClient implements RestClientInterface {
 		this.credentials = credentials;
 	};
 
-	get<TPath extends PathFor<'GET'>, TPathPattern extends MatchPathPattern<TPath>>(
+	get<TPath extends PathFor<'GET'>>(
 		endpoint: TPath,
 		params: void extends OperationParams<'GET', MatchPathPattern<TPath>> ? never : OperationParams<'GET', MatchPathPattern<TPath>>,
 		options?: Omit<RequestInit, 'method'>,
 	): Promise<Serialized<OperationResult<'GET', MatchPathPattern<TPath>>>>;
 
-	get<TPath extends PathFor<'GET'>, TPathPattern extends MatchPathPattern<TPath>>(
+	get<TPath extends PathFor<'GET'>>(
 		endpoint: TPath,
 		params?: void extends OperationParams<'GET', MatchPathPattern<TPath>> ? undefined : never,
 		options?: Omit<RequestInit, 'method'>,
 	): Promise<Serialized<OperationResult<'GET', MatchPathPattern<TPath>>>>;
 
-	get<TPath extends PathFor<'GET'>, TPathPattern extends MatchPathPattern<TPath>>(
+	get<TPath extends PathFor<'GET'>>(
 		endpoint: TPath,
 		params?: OperationParams<'GET', MatchPathPattern<TPath>>,
 		options?: Omit<RequestInit, 'method'>,

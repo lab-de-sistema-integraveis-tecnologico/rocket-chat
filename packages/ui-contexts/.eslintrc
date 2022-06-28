@@ -37,6 +37,7 @@
 		"jsx-quotes": ["error", "prefer-single"],
 		"new-cap": ["error"],
 		"no-extra-parens": "off",
+		"no-redeclare": "off",
 		"no-spaced-func": "off",
 		"no-undef": "off",
 		"no-unused-vars": "off",

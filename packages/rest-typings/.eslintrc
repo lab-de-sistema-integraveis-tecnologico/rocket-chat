@@ -2,9 +2,9 @@
 	"extends": ["@rocket.chat/eslint-config"],
 	"overrides": [
 		{
-			"files": ["**/*.spec.js", "**/*.spec.jsx"],
-			"env": {
-				"jest": true
+			"files": ["**/*.ts"],
+			"rules": {
+				"no-undef": "off"
 			}
 		}
 	],
