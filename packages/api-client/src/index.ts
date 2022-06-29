@@ -1,7 +1,7 @@
 import { stringify } from 'query-string';
+import type { Serialized } from '@rocket.chat/core-typings';
+import type { PathWithParamsFor, PathWithoutParamsFor, MatchOperation } from '@rocket.chat/rest-typings';
 
-import type { Serialized } from '../../core-typings/dist';
-import type { PathWithParamsFor, PathWithoutParamsFor, MatchOperation } from '../../rest-typings/dist';
 import type { Middleware, RestClientInterface } from './RestClientInterface';
 
 export { RestClientInterface };

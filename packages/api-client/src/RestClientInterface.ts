@@ -1,4 +1,4 @@
-import type { Serialized } from '@rocket.chat/core-typings/dist';
+import type { Serialized } from '@rocket.chat/core-typings';
 import type {
 	MatchPathPattern,
 	OperationParams,

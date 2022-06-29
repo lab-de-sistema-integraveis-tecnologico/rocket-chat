@@ -1,4 +1,5 @@
-import type { SlashCommand, SlashCommandPreviews } from '../../../core-typings/dist';
+import type { SlashCommand, SlashCommandPreviews } from '@rocket.chat/core-typings';
+
 import type { PaginatedRequest } from '../helpers/PaginatedRequest';
 import type { PaginatedResult } from '../helpers/PaginatedResult';
 
