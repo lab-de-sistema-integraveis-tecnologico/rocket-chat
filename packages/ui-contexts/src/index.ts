@@ -87,3 +87,4 @@ export {
 } from './ServerContext/methods';
 export { UploadResult } from './ServerContext';
 export { TranslationKey, TranslationLanguage } from './TranslationContext';
+export { Fields } from './UserContext';
