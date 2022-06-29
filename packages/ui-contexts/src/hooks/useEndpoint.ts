@@ -24,7 +24,10 @@ export function useEndpoint<TMethod extends Method, TPath extends PathWithoutPar
 	path: TPath,
 ): () => Promise<Serialized<OperationResult<TMethod, MatchPathPattern<TPath>>>>;
 
-export function useEndpoint<TMethod extends Method, TPath extends PathFor<TMethod>>(method: TMethod, path: TPath): (
+export function useEndpoint<TMethod extends Method, TPath extends PathFor<TMethod>>(
+	method: TMethod,
+	path: TPath,
+): (
 	params?: Serialized<OperationParams<TMethod, MatchPathPattern<TPath>>>,
 ) => Promise<Serialized<OperationResult<TMethod, MatchPathPattern<TPath>>>>;
 
