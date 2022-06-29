@@ -92,11 +92,11 @@ const initGallery = async (items: Slide[], options: PhotoSwipe.Options): Promise
 
 		currentGallery = new PhotoSwipe(container, PhotoSwipeUIDefault, items, options);
 
-		currentGallery.listen('destroy', () => {
+		currentGallery?.listen('destroy', () => {
 			currentGallery = null;
 		});
 
-		currentGallery.init();
+		currentGallery?.init();
 	}
 };
 

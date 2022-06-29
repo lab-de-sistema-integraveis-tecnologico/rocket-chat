@@ -146,7 +146,7 @@ const AccountProfilePage = (): ReactElement => {
 				}
 				commit();
 				dispatchToastMessage({ type: 'success', message: t('Profile_saved_successfully') });
-			} catch (error) {
+			} catch (error: any) {
 				dispatchToastMessage({ type: 'error', message: error });
 			}
 		};
@@ -186,7 +186,7 @@ const AccountProfilePage = (): ReactElement => {
 				type: 'success',
 				message: t('Logged_out_of_other_clients_successfully'),
 			});
-		} catch (error) {
+		} catch (error: any) {
 			dispatchToastMessage({ type: 'error', message: error });
 		}
 		setLoggingOut(false);
@@ -200,7 +200,7 @@ const AccountProfilePage = (): ReactElement => {
 					dispatchToastMessage({ type: 'success', message: t('User_has_been_deleted') });
 					closeModal();
 					logout();
-				} catch (error) {
+				} catch (error: any) {
 					dispatchToastMessage({ type: 'error', message: error });
 				}
 			};
@@ -225,7 +225,7 @@ const AccountProfilePage = (): ReactElement => {
 				await deleteOwnAccount(SHA256(passwordOrUsername));
 				dispatchToastMessage({ type: 'success', message: t('User_has_been_deleted') });
 				logout();
-			} catch (error) {
+			} catch (error: any) {
 				if (error.error === 'user-last-owner') {
 					const { shouldChangeOwner, shouldBeRemoved } = error.details;
 					return handleConfirmOwnerChange(passwordOrUsername, shouldChangeOwner, shouldBeRemoved);

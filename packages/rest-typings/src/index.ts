@@ -1,43 +1,9 @@
-import type { KeyOfEach } from '@rocket.chat/core-typings';
-
-import type { ReplacePlaceholders } from './helpers/ReplacePlaceholders';
 import type { Endpoints } from './endpoints';
+import type { Operations } from './operations';
 
 export { Endpoints };
 
-type CreateMatcher<TPath> = TPath extends `/${infer T}`
-	? CreateMatcher<T>
-	: TPath extends `:${string}/${infer T}`
-	? [string, ...CreateMatcher<T>]
-	: TPath extends `${infer H}/${infer T}`
-	? [H, ...CreateMatcher<T>]
-	: [TPath extends `:${string}` ? string : TPath];
-
-type Split<TPath> = TPath extends `/${infer T}`
-	? CreateMatcher<T>
-	: TPath extends `${infer H}/${infer T}`
-	? [H, ...CreateMatcher<T>]
-	: [TPath];
-
-type OperationsByPathPattern<TPathPattern extends keyof Endpoints> = TPathPattern extends any
-	? OperationsByPathPatternAndMethod<TPathPattern>
-	: never;
-
-type OperationsByPathPatternAndMethod<
-	TPathPattern extends keyof Endpoints,
-	TMethod extends KeyOfEach<Endpoints[TPathPattern]> = KeyOfEach<Endpoints[TPathPattern]>,
-> = TMethod extends any
-	? {
-			pathPattern: TPathPattern;
-			method: TMethod;
-			path: ReplacePlaceholders<TPathPattern>;
-			matcher: CreateMatcher<TPathPattern>;
-			params: GetParams<Endpoints[TPathPattern][TMethod]>;
-			result: GetResult<Endpoints[TPathPattern][TMethod]>;
-	  }
-	: never;
-
-type Operations = OperationsByPathPattern<keyof Endpoints>;
+type Split<TPath> = TPath extends `/${infer T}` ? Split<T> : TPath extends `${infer H}/${infer T}` ? [H, ...Split<T>] : [TPath];
 
 export type PathPattern = Operations['pathPattern'];
 
@@ -49,16 +15,24 @@ export type MethodFor<TPath extends Path> = TPath extends any ? Extract<Operatio
 
 export type PathFor<TMethod extends Method> = TMethod extends any ? Extract<Operations, { method: TMethod }>['path'] : never;
 
-export type PathWithParamsFor<TMethod extends Method> = TMethod extends any
-	? Extract<Operations, { method: TMethod; params: unknown }>['path']
+type MethodToOperationWithParams = {
+	[TOperation in Operations as Parameters<TOperation['fn']> extends { length: 1 } ? TOperation['method'] : never]: TOperation;
+};
+
+type MethodToOperationWithoutParams = {
+	[TOperation in Operations as Parameters<TOperation['fn']> extends { length: 0 } ? TOperation['method'] : never]: TOperation;
+};
+
+export type PathWithParamsFor<TMethod extends Method> = TMethod extends keyof MethodToOperationWithParams
+	? MethodToOperationWithParams[TMethod]['path']
 	: never;
 
-export type PathWithoutParamsFor<TMethod extends Method> = TMethod extends any
-	? Extract<Operations, { method: TMethod; params: void }>['path']
+export type PathWithoutParamsFor<TMethod extends Method> = TMethod extends keyof MethodToOperationWithoutParams
+	? MethodToOperationWithoutParams[TMethod]['path']
 	: never;
 
 type MatchOver<TOperations extends Operations, TSlices extends string[]> = TOperations extends any
-	? TSlices extends TOperations['matcher']
+	? TSlices extends TOperations['pathTuple']
 		? TOperations
 		: never
 	: never;

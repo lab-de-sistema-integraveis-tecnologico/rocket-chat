@@ -814,7 +814,7 @@ export type OmnichannelEndpoints = {
 		}>;
 	};
 	'/v1/livechat/department': {
-		GET: (params: LivechatDepartmentProps) => PaginatedResult<{
+		GET: (params?: LivechatDepartmentProps) => PaginatedResult<{
 			departments: ILivechatDepartment[];
 		}>;
 		POST: (params: { department: Partial<ILivechatDepartment>; agents: string[] }) => {
@@ -823,7 +823,7 @@ export type OmnichannelEndpoints = {
 		};
 	};
 	'/v1/livechat/department/:_id': {
-		GET: (params: LivechatDepartmentId) => {
+		GET: (params?: LivechatDepartmentId) => {
 			department: ILivechatDepartmentRecord | null;
 			agents?: ILivechatDepartmentAgents[];
 		};
@@ -854,7 +854,7 @@ export type OmnichannelEndpoints = {
 	};
 
 	'/v1/livechat/departments.by-unit/:id': {
-		GET: (params: LivechatDepartmentsByUnitIdProps) => PaginatedResult<{
+		GET: (params?: LivechatDepartmentsByUnitIdProps) => PaginatedResult<{
 			departments: ILivechatDepartment[];
 		}>;
 	};
@@ -962,7 +962,7 @@ export type OmnichannelEndpoints = {
 		};
 	};
 	'/v1/livechat/agents/:uid/departments': {
-		GET: (params: { enableDepartmentsOnly: 'true' | 'false' | '0' | '1' }) => { departments: ILivechatDepartmentAgents[] };
+		GET: (params?: { enableDepartmentsOnly: 'true' | 'false' | '0' | '1' }) => { departments: ILivechatDepartmentAgents[] };
 	};
 
 	'/v1/canned-responses': {

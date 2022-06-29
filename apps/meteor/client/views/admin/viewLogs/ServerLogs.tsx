@@ -29,7 +29,7 @@ const ServerLogs = (): ReactElement => {
 	useEffect(() => {
 		const fetchLines = async (): Promise<void> => {
 			try {
-				const { queue } = await getStdoutQueue(undefined);
+				const { queue } = await getStdoutQueue();
 				setEntries(queue.map(unserializeEntry).sort(compareEntries));
 			} catch (error: any) {
 				dispatchToastMessage({ type: 'error', message: error });

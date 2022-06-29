@@ -1,22 +1,44 @@
 import { Serialized } from '@rocket.chat/core-typings';
-import type { MatchPathPattern, Method, OperationParams, OperationResult, PathFor } from '@rocket.chat/rest-typings';
+import type {
+	MatchPathPattern,
+	Method,
+	OperationParams,
+	OperationResult,
+	PathFor,
+	PathWithoutParamsFor,
+	PathWithParamsFor,
+} from '@rocket.chat/rest-typings';
 import { useToastMessageDispatch, useEndpoint } from '@rocket.chat/ui-contexts';
 import { useCallback } from 'react';
 
-export const useEndpointActionExperimental = <TMethod extends Method, TPath extends PathFor<TMethod>>(
+export function useEndpointActionExperimental<TMethod extends Method, TPath extends PathWithParamsFor<TMethod>>(
 	method: TMethod,
 	path: TPath,
 	successMessage?: string,
-): ((
+): (
 	params: Serialized<OperationParams<TMethod, MatchPathPattern<TPath>>>,
-) => Promise<Serialized<OperationResult<TMethod, MatchPathPattern<TPath>>>>) => {
+) => Promise<Serialized<OperationResult<TMethod, MatchPathPattern<TPath>>>>;
+
+export function useEndpointActionExperimental<TMethod extends Method, TPath extends PathWithoutParamsFor<TMethod>>(
+	method: TMethod,
+	path: TPath,
+	successMessage?: string,
+): () => Promise<Serialized<OperationResult<TMethod, MatchPathPattern<TPath>>>>;
+
+export function useEndpointActionExperimental<TMethod extends Method, TPath extends PathFor<TMethod>>(
+	method: TMethod,
+	path: TPath,
+	successMessage?: string,
+): (
+	params?: Serialized<OperationParams<TMethod, MatchPathPattern<TPath>>>,
+) => Promise<Serialized<OperationResult<TMethod, MatchPathPattern<TPath>>>> {
 	const sendData = useEndpoint(method, path);
 	const dispatchToastMessage = useToastMessageDispatch();
 
 	return useCallback(
-		async (params) => {
+		async (params?: Serialized<OperationParams<TMethod, MatchPathPattern<TPath>>>) => {
 			try {
-				const data = await sendData(params as any);
+				const data = await sendData(params);
 
 				if (successMessage) {
 					dispatchToastMessage({ type: 'success', message: successMessage });
@@ -30,4 +52,4 @@ export const useEndpointActionExperimental = <TMethod extends Method, TPath exte
 		},
 		[dispatchToastMessage, sendData, successMessage],
 	);
-};
+}
