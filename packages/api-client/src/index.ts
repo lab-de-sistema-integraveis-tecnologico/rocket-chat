@@ -1,7 +1,7 @@
 import { stringify } from 'query-string';
 
 import type { Serialized } from '../../core-typings/dist';
-import type { MatchPathPattern, OperationParams, OperationResult, PathFor } from '../../rest-typings/dist';
+import type { PathWithParamsFor, PathWithoutParamsFor, MatchOperation } from '../../rest-typings/dist';
 import type { Middleware, RestClientInterface } from './RestClientInterface';
 
 export { RestClientInterface };
@@ -78,41 +78,52 @@ export class RestClient implements RestClientInterface {
 		this.credentials = credentials;
 	};
 
-	get<TPath extends PathFor<'GET'>>(
+	async get<TPath extends PathWithParamsFor<'GET'>>(
 		endpoint: TPath,
-		params: void extends OperationParams<'GET', MatchPathPattern<TPath>> ? never : OperationParams<'GET', MatchPathPattern<TPath>>,
+		params: MatchOperation<'GET', TPath>['params'],
 		options?: Omit<RequestInit, 'method'>,
-	): Promise<Serialized<OperationResult<'GET', MatchPathPattern<TPath>>>>;
+	): Promise<Serialized<MatchOperation<'GET', TPath>['result']>>;
 
-	get<TPath extends PathFor<'GET'>>(
+	async get<TPath extends PathWithoutParamsFor<'GET'>>(
 		endpoint: TPath,
-		params?: void extends OperationParams<'GET', MatchPathPattern<TPath>> ? undefined : never,
+		params?: undefined,
 		options?: Omit<RequestInit, 'method'>,
-	): Promise<Serialized<OperationResult<'GET', MatchPathPattern<TPath>>>>;
+	): Promise<Serialized<MatchOperation<'GET', TPath>['result']>>;
 
-	get<TPath extends PathFor<'GET'>>(
+	async get<TPath extends PathWithoutParamsFor<'GET'>>(
 		endpoint: TPath,
-		params?: OperationParams<'GET', MatchPathPattern<TPath>>,
+		params?: MatchOperation<'GET', TPath>['params'],
 		options?: Omit<RequestInit, 'method'>,
-	): Promise<Serialized<OperationResult<'GET', MatchPathPattern<TPath>>>> {
+	): Promise<Serialized<MatchOperation<'GET', TPath>['result']>> {
 		if (/\?/.test(endpoint)) {
 			// throw new Error('Endpoint cannot contain query string');
 			console.warn('Endpoint cannot contain query string', endpoint);
 		}
 		const queryParams = this.getParams(params);
-		return this.send(`${endpoint}${queryParams ? `?${queryParams}` : ''}`, 'GET', options).then(function (response) {
-			return response.json();
-		});
+		const response = await this.send(`${endpoint}${queryParams ? `?${queryParams}` : ''}`, 'GET', options);
+		return response.json();
 	}
 
-	post<TPath extends PathFor<'POST'>>(
+	async post<TPath extends PathWithParamsFor<'POST'>>(
 		endpoint: TPath,
-		params: void extends OperationParams<'POST', MatchPathPattern<TPath>> ? never : OperationParams<'POST', MatchPathPattern<TPath>>,
+		params: MatchOperation<'POST', TPath>['params'],
+		options?: Omit<RequestInit, 'method'>,
+	): Promise<Serialized<MatchOperation<'POST', TPath>['result']>>;
+
+	async post<TPath extends PathWithoutParamsFor<'POST'>>(
+		endpoint: TPath,
+		params?: undefined,
+		options?: Omit<RequestInit, 'method'>,
+	): Promise<Serialized<MatchOperation<'POST', TPath>['result']>>;
+
+	async post<TPath extends PathWithoutParamsFor<'POST'>>(
+		endpoint: TPath,
+		params?: MatchOperation<'POST', TPath>['params'],
 		{ headers, ...options }: Omit<RequestInit, 'method'> = {},
-	): Promise<Serialized<OperationResult<'POST', MatchPathPattern<TPath>>>> {
+	): Promise<Serialized<MatchOperation<'POST', TPath>['result']>> {
 		const isFormData = checkIfIsFormData(params);
 
-		return this.send(endpoint, 'POST', {
+		const response = await this.send(endpoint, 'POST', {
 			body: isFormData ? buildFormData(params) : JSON.stringify(params),
 
 			headers: {
@@ -122,14 +133,29 @@ export class RestClient implements RestClientInterface {
 			},
 
 			...options,
-		}).then(function (response) {
-			return response.json();
 		});
+		return response.json();
 	}
 
-	put: RestClientInterface['put'] = (endpoint, params, { headers, ...options } = {}) => {
+	async put<TPath extends PathWithParamsFor<'PUT'>>(
+		endpoint: TPath,
+		params: MatchOperation<'PUT', TPath>['params'],
+		options?: Omit<RequestInit, 'method'>,
+	): Promise<Serialized<MatchOperation<'PUT', TPath>['result']>>;
+
+	async put<TPath extends PathWithoutParamsFor<'PUT'>>(
+		endpoint: TPath,
+		params?: undefined,
+		options?: Omit<RequestInit, 'method'>,
+	): Promise<Serialized<MatchOperation<'PUT', TPath>['result']>>;
+
+	async put<TPath extends PathWithoutParamsFor<'PUT'>>(
+		endpoint: TPath,
+		params?: MatchOperation<'PUT', TPath>['params'],
+		{ headers, ...options }: Omit<RequestInit, 'method'> = {},
+	): Promise<Serialized<MatchOperation<'PUT', TPath>['result']>> {
 		const isFormData = checkIfIsFormData(params);
-		return this.send(endpoint, 'PUT', {
+		const response = await this.send(endpoint, 'PUT', {
 			body: isFormData ? buildFormData(params) : JSON.stringify(params),
 
 			headers: {
@@ -139,16 +165,30 @@ export class RestClient implements RestClientInterface {
 			},
 
 			...options,
-		}).then(function (response) {
-			return response.json();
 		});
-	};
+		return response.json();
+	}
 
-	delete: RestClientInterface['delete'] = (endpoint, params, options) => {
-		return this.send(endpoint, 'DELETE', options).then(function (response) {
-			return response.json();
-		});
-	};
+	async delete<TPath extends PathWithParamsFor<'DELETE'>>(
+		endpoint: TPath,
+		params: MatchOperation<'DELETE', TPath>['params'],
+		options?: Omit<RequestInit, 'method'>,
+	): Promise<Serialized<MatchOperation<'DELETE', TPath>['result']>>;
+
+	async delete<TPath extends PathWithoutParamsFor<'DELETE'>>(
+		endpoint: TPath,
+		params?: undefined,
+		options?: Omit<RequestInit, 'method'>,
+	): Promise<Serialized<MatchOperation<'DELETE', TPath>['result']>>;
+
+	async delete<TPath extends PathWithoutParamsFor<'DELETE'>>(
+		endpoint: TPath,
+		params?: MatchOperation<'DELETE', TPath>['params'],
+		options: Omit<RequestInit, 'method'> = {},
+	): Promise<Serialized<MatchOperation<'DELETE', TPath>['result']>> {
+		const response = await this.send(endpoint, 'DELETE', options);
+		return response.json();
+	}
 
 	protected getCredentialsAsHeaders(): Record<string, string> {
 		const credentials = this.getCredentials();

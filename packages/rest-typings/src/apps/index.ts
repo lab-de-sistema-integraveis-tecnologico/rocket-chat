@@ -107,7 +107,8 @@ export type AppsEndpoints = {
 					id: string;
 					modifiedDate: Date;
 					title: string;
-			  }[]);
+			  }[])
+			| (() => { apps: App[] });
 
 		POST: (params: { appId: string; marketplace: boolean; version: string; permissionsGranted: IPermission[] }) => {
 			app: App;

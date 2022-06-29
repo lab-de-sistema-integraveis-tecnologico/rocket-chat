@@ -1,35 +1,34 @@
 import type { Endpoints } from './endpoints';
-import type { Operations } from './operations';
+import type {
+	Operations,
+	Method,
+	PathPattern,
+	Path,
+	MethodFor,
+	PathFor,
+	PathWithParamsFor,
+	PathWithoutParamsFor,
+	OperationArgs,
+	OperationParams,
+	OperationResult,
+	MatchOperation,
+} from './operations';
 
-export { Endpoints };
+export {
+	Endpoints,
+	Path,
+	MethodFor,
+	Method,
+	PathFor,
+	PathWithParamsFor,
+	PathWithoutParamsFor,
+	OperationArgs,
+	OperationParams,
+	OperationResult,
+	MatchOperation,
+};
 
 type Split<TPath> = TPath extends `/${infer T}` ? Split<T> : TPath extends `${infer H}/${infer T}` ? [H, ...Split<T>] : [TPath];
-
-export type PathPattern = Operations['pathPattern'];
-
-export type Method = Operations['method'];
-
-export type Path = Operations['path'];
-
-export type MethodFor<TPath extends Path> = TPath extends any ? Extract<Operations, { path: TPath }>['method'] : never;
-
-export type PathFor<TMethod extends Method> = TMethod extends any ? Extract<Operations, { method: TMethod }>['path'] : never;
-
-type MethodToOperationWithParams = {
-	[TOperation in Operations as Parameters<TOperation['fn']> extends { length: 1 } ? TOperation['method'] : never]: TOperation;
-};
-
-type MethodToOperationWithoutParams = {
-	[TOperation in Operations as Parameters<TOperation['fn']> extends { length: 0 } ? TOperation['method'] : never]: TOperation;
-};
-
-export type PathWithParamsFor<TMethod extends Method> = TMethod extends keyof MethodToOperationWithParams
-	? MethodToOperationWithParams[TMethod]['path']
-	: never;
-
-export type PathWithoutParamsFor<TMethod extends Method> = TMethod extends keyof MethodToOperationWithoutParams
-	? MethodToOperationWithoutParams[TMethod]['path']
-	: never;
 
 type MatchOver<TOperations extends Operations, TSlices extends string[]> = TOperations extends any
 	? TSlices extends TOperations['pathTuple']
@@ -43,22 +42,6 @@ export type JoinPathPattern<TBasePath extends string, TSubPathPattern extends st
 	PathPattern,
 	`${TBasePath}/${TSubPathPattern}` | TSubPathPattern
 >;
-
-type GetParams<TOperation> = TOperation extends (...args: any) => any
-	? Parameters<TOperation>[0] extends void
-		? void
-		: Parameters<TOperation>[0]
-	: never;
-
-type GetResult<TOperation> = TOperation extends (...args: any) => any ? ReturnType<TOperation> : never;
-
-export type OperationParams<TMethod extends Method, TPathPattern extends PathPattern> = TMethod extends keyof Endpoints[TPathPattern]
-	? GetParams<Endpoints[TPathPattern][TMethod]>
-	: never;
-
-export type OperationResult<TMethod extends Method, TPathPattern extends PathPattern> = TMethod extends keyof Endpoints[TPathPattern]
-	? GetResult<Endpoints[TPathPattern][TMethod]>
-	: never;
 
 export type UrlParams<T extends string> = string extends T
 	? Record<string, string>
