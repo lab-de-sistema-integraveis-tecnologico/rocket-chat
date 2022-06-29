@@ -15,7 +15,7 @@ export type CommandsEndpoints = {
 				fields?: string;
 			}>,
 		) => PaginatedResult<{
-			commands: Pick<SlashCommand, 'clientOnly' | 'command' | 'description' | 'params' | 'providesPreview'>[];
+			commands: Pick<SlashCommand, 'clientOnly' | 'command' | 'description' | 'params' | 'providesPreview' | 'appId'>[];
 		}>;
 	};
 	'/v1/commands.run': {
