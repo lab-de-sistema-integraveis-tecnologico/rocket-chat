@@ -10,7 +10,7 @@ export type CommandsEndpoints = {
 	};
 	'/v1/commands.list': {
 		GET: (
-			params: PaginatedRequest<{
+			params?: PaginatedRequest<{
 				fields?: string;
 			}>,
 		) => PaginatedResult<{

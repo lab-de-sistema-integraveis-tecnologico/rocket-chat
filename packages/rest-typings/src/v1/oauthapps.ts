@@ -9,7 +9,7 @@ export type OauthAppsGetParams = { clientId: string } | { appId: string };
 
 export type OAuthAppsEndpoint = {
 	'/v1/oauth-apps.list': {
-		GET: (params: { uid: IUser['_id'] }) => {
+		GET: (params?: { uid: IUser['_id'] }) => {
 			oauthApps: IOAuthApps[];
 		};
 	};

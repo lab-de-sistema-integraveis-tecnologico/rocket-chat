@@ -88,12 +88,12 @@ API.v1.addRoute(
 				_id: String,
 			});
 
-			const { onlyMyDepartments } = this.queryParams;
+			const { onlyMyDepartments } = this.queryParams ?? {};
 
 			const { department, agents } = await findDepartmentById({
 				userId: this.userId,
 				departmentId: this.urlParams._id,
-				includeAgents: this.queryParams.includeAgents && this.queryParams.includeAgents === 'true',
+				includeAgents: this.queryParams?.includeAgents === 'true',
 				onlyMyDepartments: onlyMyDepartments === 'true',
 			});
 

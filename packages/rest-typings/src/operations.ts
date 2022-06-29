@@ -26,7 +26,12 @@ type OperationsByPathPatternAndMethod<
 			method: TMethod;
 			fn: Endpoints[TPathPattern][TMethod];
 			args: Args<Endpoints[TPathPattern][TMethod]>;
-			hasParams: Args<Endpoints[TPathPattern][TMethod]> extends { length: 0 } ? false : true;
+			withParams: Args<Endpoints[TPathPattern][TMethod]> extends { length: 0 } ? false : true;
+			withoutParams: Args<Endpoints[TPathPattern][TMethod]> extends { length: 0 }
+				? true
+				: undefined extends Args<Endpoints[TPathPattern][TMethod]>[0]
+				? true
+				: false;
 			params: Args<Endpoints[TPathPattern][TMethod]> extends { length: 0 } ? void : Args<Endpoints[TPathPattern][TMethod]>[0];
 			result: Result<Endpoints[TPathPattern][TMethod]>;
 	  }
@@ -55,7 +60,7 @@ type MethodToOperation = {
 export type PathFor<TMethod extends Method> = MethodToOperation[TMethod]['path'];
 
 type MethodToOperationWithParams = {
-	[TOperation in Operations as TOperation['hasParams'] extends true ? TOperation['method'] : never]: TOperation;
+	[TOperation in Operations as TOperation['withParams'] extends true ? TOperation['method'] : never]: TOperation;
 };
 
 export type PathWithParamsFor<TMethod extends Method> = TMethod extends keyof MethodToOperationWithParams
@@ -63,7 +68,7 @@ export type PathWithParamsFor<TMethod extends Method> = TMethod extends keyof Me
 	: never;
 
 type MethodToOperationWithoutParams = {
-	[TOperation in Operations as TOperation['hasParams'] extends false ? TOperation['method'] : never]: TOperation;
+	[TOperation in Operations as TOperation['withoutParams'] extends true ? TOperation['method'] : never]: TOperation;
 };
 
 export type PathWithoutParamsFor<TMethod extends Method> = TMethod extends keyof MethodToOperationWithoutParams

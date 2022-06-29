@@ -6,7 +6,7 @@ declare module '@rocket.chat/rest-typings' {
 	interface Endpoints {
 		'/v1/canned-responses': {
 			GET: (
-				params: PaginatedRequest<{
+				params?: PaginatedRequest<{
 					shortcut?: string;
 					text?: string;
 					scope?: string;

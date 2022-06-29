@@ -8,7 +8,7 @@ API.v1.addRoute(
 		async get() {
 			const { offset, count } = this.getPaginationItems();
 			const { sort } = this.parseJsonQuery();
-			const { text } = this.queryParams;
+			const { text } = this.queryParams ?? {};
 
 			return API.v1.success(
 				await findTags({

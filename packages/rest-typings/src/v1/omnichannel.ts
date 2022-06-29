@@ -850,7 +850,7 @@ export type OmnichannelEndpoints = {
 		GET: () => ILivechatMonitor;
 	};
 	'/v1/livechat/tags': {
-		GET: (params: LivechatTagsListProps) => PaginatedResult<{
+		GET: (params?: LivechatTagsListProps) => PaginatedResult<{
 			tags: ILivechatTag[];
 		}>;
 	};
@@ -905,7 +905,7 @@ export type OmnichannelEndpoints = {
 	};
 
 	'/v1/livechat/custom-fields': {
-		GET: (params: LivechatCustomFieldsProps) => PaginatedResult<{
+		GET: (params?: LivechatCustomFieldsProps) => PaginatedResult<{
 			customFields: [
 				{
 					_id: string;
@@ -950,7 +950,7 @@ export type OmnichannelEndpoints = {
 
 	'/v1/livechat/users/agent/:_id': {
 		GET: (
-			params: PaginatedRequest<{
+			params?: PaginatedRequest<{
 				text: string;
 			}>,
 		) => { user: Pick<ILivechatAgent, '_id' | 'username' | 'name' | 'status' | 'statusLivechat' | 'emails' | 'livechat'> };
@@ -964,7 +964,7 @@ export type OmnichannelEndpoints = {
 	};
 
 	'/v1/livechat/visitor/:token': {
-		GET: (params: LivechatVisitorTokenGet) => { visitor: ILivechatVisitor };
+		GET: (params?: LivechatVisitorTokenGet) => { visitor: ILivechatVisitor };
 		DELETE: (params: LivechatVisitorTokenDelete) => {
 			visitor: { _id: string; ts: string };
 		};
